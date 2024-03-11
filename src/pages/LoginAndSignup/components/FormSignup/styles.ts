@@ -28,7 +28,7 @@ export const Wrapper = styled.form`
     background-color: ${({ theme }) => theme.colors.quinary};
   }
 
-  .or {
+  span {
     padding: 5px;
     border-radius: 100vw;
     line-height: 10px;

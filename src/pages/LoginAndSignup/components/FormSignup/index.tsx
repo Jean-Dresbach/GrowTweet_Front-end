@@ -1,19 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 
 import { useTheme } from "../../../../contexts/ThemeContext"
-import { login } from "../../../../services/auth.service"
 import { Input } from "../Input"
 import { Wrapper } from "./styles"
 import { Button } from "../../../../components/Button"
 
-interface FormLoginProps {
+interface FormSignupProps {
   flipForm: () => void
 }
 
-export function FormLogin({ flipForm }: FormLoginProps) {
-  const navigate = useNavigate()
+export function FormSignup({ flipForm }: FormSignupProps) {
   const { theme } = useTheme()
   const [isFormValid, setIsFormValid] = useState(false)
   const [inputInfo, setInputInfo] = useState({
@@ -21,8 +18,11 @@ export function FormLogin({ flipForm }: FormLoginProps) {
     errorMessage: ""
   })
   const [data, setData] = useState({
-    emailOrUsername: "",
-    password: ""
+    name: "",
+    email: "",
+    username: "",
+    password: "",
+    confimPassword: ""
   })
 
   useEffect(() => {
@@ -39,32 +39,48 @@ export function FormLogin({ flipForm }: FormLoginProps) {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
-    try {
-      const response = await login(data)
-      console.log(response)
+    // try {
+    // //   const response = await login(data)
+    //   console.log(response)
 
-      if (response.code !== 200) {
-        setInputInfo({ isValid: false, errorMessage: response.message })
-      } else {
-        const { token, userId } = response.data
+    //   if (response.code !== 200) {
+    //     setInputInfo({ isValid: false, errorMessage: response.message })
+    //   } else {
+    //     const { token, userId } = response.data
 
-        localStorage.setItem("user", JSON.stringify({ token, userId }))
+    //     localStorage.setItem("user", JSON.stringify({ token, userId }))
 
-        navigate("/home")
-      }
-    } catch (error: any) {
-      console.log("Erro ao enviar formulário: ", error.message)
-    }
+    //     navigate("/home")
+    //   }
+    // } catch (error: any) {
+    //   console.log("Erro ao enviar formulário: ", error.message)
+    // }
   }
 
   return (
     <Wrapper onSubmit={handleSubmit}>
-      <h2>Ja tem uma conta?</h2>
+      <h2>Não tem uma conta?</h2>
       <Input
-        name="emailOrUsername"
-        value={data.emailOrUsername}
+        name="name"
+        value={data.name}
         onChange={handleChange}
-        placeholder="E-mail ou nome de usuário"
+        placeholder="Nome de usuário"
+        isValid={inputInfo.isValid}
+        errorMessage={inputInfo.errorMessage}
+      />
+      <Input
+        name="email"
+        value={data.email}
+        onChange={handleChange}
+        placeholder="E-mail"
+        isValid={inputInfo.isValid}
+        errorMessage={inputInfo.errorMessage}
+      />
+      <Input
+        name="username"
+        value={data.username}
+        onChange={handleChange}
+        placeholder="Username"
         isValid={inputInfo.isValid}
         errorMessage={inputInfo.errorMessage}
       />
@@ -76,9 +92,17 @@ export function FormLogin({ flipForm }: FormLoginProps) {
         isValid={inputInfo.isValid}
         errorMessage={inputInfo.errorMessage}
       />
+      <Input
+        name="confimPassword"
+        value={data.confimPassword}
+        onChange={handleChange}
+        placeholder="Confime senha"
+        isValid={inputInfo.isValid}
+        errorMessage={inputInfo.errorMessage}
+      />
 
       <Button
-        text="Entrar"
+        text="Criar"
         type="submit"
         backgroundColor={theme.colors.primary}
         color="white"
@@ -88,11 +112,11 @@ export function FormLogin({ flipForm }: FormLoginProps) {
 
       <div>
         <hr />
-        <span className="or">ou</span>
+        <span>ou</span>
       </div>
 
       <Button
-        text="Criar conta"
+        text="Entrar na conta"
         type="button"
         backgroundColor={theme.colors.secondary}
         color={theme.colors.primary}

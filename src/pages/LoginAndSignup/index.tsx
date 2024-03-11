@@ -1,9 +1,18 @@
+import { useState } from "react"
+
 import { useTheme } from "../../contexts/ThemeContext"
+import { FormSignup } from "./components/FormSignup"
 import { FormLogin } from "./components/FormLogin"
-import { Main } from "./styles"
+import { FlipForm, Main } from "./styles"
 
 export function LoginAndSignup() {
   const { theme } = useTheme()
+  const [flip, setFlip] = useState(false)
+
+  const flipForm = () => {
+    console.log("ta indo")
+    setFlip(!flip)
+  }
 
   return (
     <Main>
@@ -67,7 +76,12 @@ export function LoginAndSignup() {
         </defs>
       </svg>
 
-      <FormLogin />
+      <FlipForm className={flip ? "flip-form" : ""}>
+        <div className="flip-form-inner">
+          <FormLogin flipForm={flipForm} />
+          <FormSignup flipForm={flipForm} />
+        </div>
+      </FlipForm>
     </Main>
   )
 }

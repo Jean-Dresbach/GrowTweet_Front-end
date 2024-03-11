@@ -9,6 +9,7 @@ interface ButtonProps {
   color: string
   borderColor: string
   isDisabled?: boolean
+  onClick?: () => void
 }
 
 export function Button({
@@ -17,7 +18,8 @@ export function Button({
   backgroundColor,
   color,
   borderColor,
-  isDisabled = false
+  isDisabled = false,
+  onClick
 }: ButtonProps) {
   const [disabled, setDisabled] = useState(false)
 
@@ -27,6 +29,7 @@ export function Button({
 
   return (
     <Wrapper
+      className={backgroundColor === "#000000" ? "darker" : ""}
       style={{
         backgroundColor: backgroundColor,
         color: color,
@@ -34,6 +37,7 @@ export function Button({
       }}
       type={type}
       disabled={disabled}
+      onClick={onClick}
     >
       {text}
     </Wrapper>

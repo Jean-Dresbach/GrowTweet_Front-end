@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
     width: 100%;
 
     outline: none;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     border-radius: 5px;
     color: ${({ theme }) => theme.colors.quinary};
     border: 1px solid ${({ theme }) => theme.colors.quinary};
@@ -49,10 +49,10 @@ export const Wrapper = styled.div`
 
   span {
     position: absolute;
-    left: 65px;
-    bottom: -15px;
+    left: 0;
+    bottom: 0;
 
-    font-size: 13px;
+    font-size: 11px;
     color: tomato !important;
   }
 `

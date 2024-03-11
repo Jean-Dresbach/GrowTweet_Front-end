@@ -23,4 +23,15 @@ export default createGlobalStyle`
   .invalid + label {
     color: tomato !important;
   }
+
+  .flip-form {
+    .flip-form-inner {
+      transform: rotateY(180deg);
+    }
+  }
+
+  .darker:hover,
+  .darker:focus {
+    background-color:${({ theme }) => theme.colors.tertiary} !important;
+  }
 `

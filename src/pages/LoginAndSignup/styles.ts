@@ -17,20 +17,22 @@ export const Main = styled.main`
     padding: 30px;
     justify-content: space-between;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
 
     svg {
-      width: 150px;
-      height: 30.38px;
+      width: 200px;
+      height: 40.51px;
     }
 
     & > div {
       flex-grow: 1;
+    }
+  }
 
-      .flip-form-inner {
-        display: flex;
-        align-items: center;
-      }
+  @media (min-width: 1200px) {
+    svg {
+      width: 350px;
+      height: 81.01px;
     }
   }
 `
@@ -62,6 +64,13 @@ export const FlipForm = styled.div`
   }
 
   form:nth-child(2) {
+    display: flex;
+    justify-content: center;
     transform: rotateY(180deg);
+  }
+
+  @media (min-width: 1200px) {
+    width: 400px;
+    height: 742px;
   }
 `

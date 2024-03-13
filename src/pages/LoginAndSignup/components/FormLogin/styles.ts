@@ -44,4 +44,10 @@ export const Wrapper = styled.form`
     margin-top: 13px;
     margin-bottom: 8px;
   }
+
+  @media (min-width: 1200px) {
+    h2 {
+      font-size: xx-large;
+    }
+  }
 `

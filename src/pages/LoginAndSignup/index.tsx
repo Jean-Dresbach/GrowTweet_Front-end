@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 import { useTheme } from "../../contexts/ThemeContext"
 import { FormSignup } from "./components/FormSignup"
@@ -7,7 +8,14 @@ import { FlipForm, Main } from "./styles"
 
 export function LoginAndSignup() {
   const { theme } = useTheme()
+  const navigate = useNavigate()
   const [flip, setFlip] = useState(false)
+
+  useEffect(() => {
+    const userStorage = localStorage.getItem("user")
+
+    if (userStorage) navigate("/home")
+  }, [navigate])
 
   const flipForm = () => {
     console.log("ta indo")

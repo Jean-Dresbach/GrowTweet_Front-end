@@ -5,25 +5,32 @@ import { useTheme } from "../../../../contexts/ThemeContext"
 import { Input } from "../Input"
 import { Wrapper } from "./styles"
 import { Button } from "../../../../components/Button"
+import { signup } from "../../../../services/auth.service"
 
 interface FormSignupProps {
   flipForm: () => void
 }
 
+const resetForm = {
+  name: "",
+  email: "",
+  username: "",
+  passwordSignup: "",
+  confirmPassword: ""
+}
+
+// type KeysInputError = "username" | "email" | "confirmPassword"
+
+interface InputError {
+  isValid: boolean
+  errorMessage: string
+}
+
 export function FormSignup({ flipForm }: FormSignupProps) {
   const { theme } = useTheme()
   const [isFormValid, setIsFormValid] = useState(false)
-  const [inputInfo, setInputInfo] = useState({
-    isValid: true,
-    errorMessage: ""
-  })
-  const [data, setData] = useState({
-    name: "",
-    email: "",
-    username: "",
-    password: "",
-    confimPassword: ""
-  })
+  const [inputInfo, setInputInfo] = useState<Record<string, InputError>>({})
+  const [data, setData] = useState(resetForm)
 
   useEffect(() => {
     const isValid = Object.values(data).every(value => value.trim() !== "")
@@ -39,22 +46,38 @@ export function FormSignup({ flipForm }: FormSignupProps) {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
-    // try {
-    // //   const response = await login(data)
-    //   console.log(response)
+    try {
+      if (data.passwordSignup !== data.confirmPassword) {
+        setInputInfo({
+          confirmPassword: {
+            isValid: false,
+            errorMessage: "As senhas não coincidem"
+          }
+        })
+        return
+      }
 
-    //   if (response.code !== 200) {
-    //     setInputInfo({ isValid: false, errorMessage: response.message })
-    //   } else {
-    //     const { token, userId } = response.data
+      setInputInfo({})
 
-    //     localStorage.setItem("user", JSON.stringify({ token, userId }))
+      const response = await signup(data)
+      console.log(response)
 
-    //     navigate("/home")
-    //   }
-    // } catch (error: any) {
-    //   console.log("Erro ao enviar formulário: ", error.message)
-    // }
+      if (response.code === 201) {
+        setInputInfo({})
+        setData(resetForm)
+        flipForm()
+        return
+      }
+
+      setInputInfo({
+        [response.field]: {
+          isValid: false,
+          errorMessage: response.message
+        }
+      })
+    } catch (error: any) {
+      console.log("Erro ao enviar formulário: ", error.message)
+    }
   }
 
   return (
@@ -64,41 +87,34 @@ export function FormSignup({ flipForm }: FormSignupProps) {
         name="name"
         value={data.name}
         onChange={handleChange}
-        placeholder="Nome de usuário"
-        isValid={inputInfo.isValid}
-        errorMessage={inputInfo.errorMessage}
+        placeholder="Nome"
       />
       <Input
         name="email"
         value={data.email}
         onChange={handleChange}
         placeholder="E-mail"
-        isValid={inputInfo.isValid}
-        errorMessage={inputInfo.errorMessage}
+        {...inputInfo.email}
       />
       <Input
         name="username"
         value={data.username}
         onChange={handleChange}
-        placeholder="Username"
-        isValid={inputInfo.isValid}
-        errorMessage={inputInfo.errorMessage}
+        placeholder="Nome de usuário"
+        {...inputInfo.username}
       />
       <Input
-        name="password"
-        value={data.password}
+        name="passwordSignup"
+        value={data.passwordSignup}
         onChange={handleChange}
         placeholder="Senha"
-        isValid={inputInfo.isValid}
-        errorMessage={inputInfo.errorMessage}
       />
       <Input
-        name="confimPassword"
-        value={data.confimPassword}
+        name="confirmPassword"
+        value={data.confirmPassword}
         onChange={handleChange}
-        placeholder="Confime senha"
-        isValid={inputInfo.isValid}
-        errorMessage={inputInfo.errorMessage}
+        placeholder="Confirme senha"
+        {...inputInfo.confirmPassword}
       />
 
       <Button
@@ -112,7 +128,7 @@ export function FormSignup({ flipForm }: FormSignupProps) {
 
       <div>
         <hr />
-        <span>ou</span>
+        <span className="or">ou</span>
       </div>
 
       <Button

@@ -33,6 +33,11 @@ export function FormLogin({ flipForm }: FormLoginProps) {
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target
 
+    setInputInfo({
+      isValid: true,
+      errorMessage: ""
+    })
+
     setData(prevState => ({ ...prevState, [name]: value }))
   }
 

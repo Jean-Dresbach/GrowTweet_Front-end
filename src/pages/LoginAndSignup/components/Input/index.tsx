@@ -6,8 +6,8 @@ interface InputProps {
   placeholder: string
   name: string
   value: string
-  isValid: boolean
-  errorMessage: string
+  isValid?: boolean
+  errorMessage?: string
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -16,8 +16,8 @@ export function Input({
   name,
   onChange,
   value,
-  errorMessage,
-  isValid
+  errorMessage = "",
+  isValid = true
 }: InputProps) {
   const [inputClass, setInputClass] = useState("")
 

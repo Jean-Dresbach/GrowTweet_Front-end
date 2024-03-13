@@ -53,6 +53,6 @@ export const Wrapper = styled.div`
     bottom: 0;
 
     font-size: 11px;
-    color: tomato !important;
+    color: tomato;
   }
 `

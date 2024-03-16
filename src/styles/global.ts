@@ -13,6 +13,8 @@ export default createGlobalStyle`
   }
 
   body {
+    margin: auto;
+    max-width: 1300px;
     background-color: ${({ theme }) => theme.colors.secondary};
   }
 

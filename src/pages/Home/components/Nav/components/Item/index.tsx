@@ -1,25 +1,74 @@
 import { useState } from "react"
-import { Wrapper } from "./styles"
 
-interface ItemProps {
-  icon: string
-  focusedIcon: string
+import { useTheme } from "../../../../../../contexts/ThemeContext"
+import { Item } from "./styles"
+
+interface ItemData {
+  id: number
   text: string
-  isFocused?: boolean
+  svgFileName: string
 }
 
-export function Item({
-  text,
-  focusedIcon,
-  icon,
-  isFocused = false
-}: ItemProps) {
-  const [focused, setFocused] = useState(isFocused)
+let id = 1
+
+const itemsData: ItemData[] = []
+
+function addItem(text: string, svgFileName: string) {
+  const newItem = {
+    id: id++,
+    text,
+    svgFileName
+  }
+  itemsData.push(newItem)
+}
+
+addItem("Página Inicial", "initial_page")
+addItem("Explorar", "explore")
+addItem("Perfil", "profile")
+addItem("Configurações", "configuration")
+
+export function Items() {
+  const { theme } = useTheme()
+  const [focusedItemId, setFocusedItemId] = useState<number | null>(null)
+
+  function getSvgPath(
+    themeTitle: string,
+    fileName: string,
+    isFocused: boolean
+  ) {
+    const themeFolder = themeTitle === "light" ? "light_color" : "dark_color"
+    const focusSuffix = isFocused ? "_focused" : ""
+    return `src/assets/Icons/${themeFolder}/${fileName}${focusSuffix}.svg`
+  }
+
+  const handleFocus = (id: number) => {
+    setFocusedItemId(id)
+  }
+
+  const handleBlur = () => {
+    setFocusedItemId(null)
+  }
 
   return (
-    <Wrapper onFocus={() => setFocused(true)}>
-      <img src={focused ? "../../" + focusedIcon : "../../" + icon} />
-      <span>{text}</span>
-    </Wrapper>
+    <>
+      {itemsData.map(item => {
+        const svgPath = getSvgPath(
+          theme.title,
+          item.svgFileName,
+          focusedItemId === item.id
+        )
+
+        return (
+          <Item
+            key={item.id}
+            onFocus={() => handleFocus(item.id)}
+            onBlur={handleBlur}
+          >
+            <img src={svgPath} alt="Icon" />
+            <span>{item.text}</span>
+          </Item>
+        )
+      })}
+    </>
   )
 }

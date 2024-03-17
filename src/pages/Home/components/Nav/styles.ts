@@ -5,20 +5,19 @@ export const Wrapper = styled.nav`
   height: 100%;
   max-width: 270px;
 
-  background-color: red;
   padding: 8px;
 
   display: flex;
   flex-direction: column;
 
   .logo {
-    width: 150px;
-    height: 30.38px;
+    width: 197.5px;
+    height: 40px;
     margin: 8px 0;
   }
 
   .logo-small {
-    width: 300px;
+    width: 40px;
     display: none;
     margin: 8px 0;
   }

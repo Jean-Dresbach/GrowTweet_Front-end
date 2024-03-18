@@ -20,7 +20,7 @@ interface ThemeContextProviderProps {
 }
 
 export function ThemeContextProvider({ children }: ThemeContextProviderProps) {
-  const [theme, setTheme] = useState(dark)
+  const [theme, setTheme] = useState(light)
 
   function toggleTheme(themeTitle: "light" | "dark" | "darker") {
     setTheme(themes.find(t => t.title === themeTitle) as Theme)

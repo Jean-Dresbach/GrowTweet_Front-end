@@ -7,19 +7,20 @@ export const Wrapper = styled.nav`
 
   padding: 8px;
 
-  display: flex;
-  flex-direction: column;
-
   .logo {
-    width: 197.5px;
-    height: 40px;
-    margin: 8px 0;
+    width: 148.12px;
+    height: 30px;
+    margin-left: 15px;
+    margin-top: 8px;
+    margin-bottom: 25px;
   }
 
   .logo-small {
-    width: 40px;
+    width: 25px;
     display: none;
-    margin: 8px 0;
+    margin-left: 12px;
+    margin-top: 8px;
+    margin-bottom: 25px;
   }
 
   @media (max-width: 1280px) {

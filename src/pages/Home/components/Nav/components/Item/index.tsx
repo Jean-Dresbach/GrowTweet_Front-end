@@ -61,11 +61,15 @@ export function Items() {
         return (
           <Item
             key={item.id}
-            onFocus={() => handleFocus(item.id)}
+            onClick={() => handleFocus(item.id)}
             onBlur={handleBlur}
           >
             <img src={svgPath} alt="Icon" />
-            <span>{item.text}</span>
+            <span
+              style={{ fontWeight: focusedItemId === item.id ? "bold" : "" }}
+            >
+              {item.text}
+            </span>
           </Item>
         )
       })}

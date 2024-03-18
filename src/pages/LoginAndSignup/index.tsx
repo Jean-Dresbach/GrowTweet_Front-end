@@ -14,11 +14,10 @@ export function LoginAndSignup() {
   useEffect(() => {
     const userStorage = localStorage.getItem("user")
 
-    if (userStorage) navigate("/home")
+    if (userStorage) navigate("/")
   }, [navigate])
 
   const flipForm = () => {
-    console.log("ta indo")
     setFlip(!flip)
   }
 
